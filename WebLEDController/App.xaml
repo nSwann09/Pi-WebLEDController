@@ -1,0 +1,8 @@
+﻿<Application
+    x:Class="WebLEDController.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WebLEDController"
+    RequestedTheme="Light">
+
+</Application>

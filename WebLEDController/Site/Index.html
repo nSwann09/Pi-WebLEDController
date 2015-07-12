@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		</script>
+	</head>
+	<body>
+		<body>
+			<!-- Navigation -->
+			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">LED Web Control</a>
+					</div>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							<li>
+								<a href="#home">Tutorial</a>
+							</li>
+							<li>
+								<a href="#api">Api</a>
+							</li>
+						</ul>
+					</div>
+					<!-- /.navbar-collapse -->
+				</div>
+				<!-- /.container -->
+			</nav>
+			<!-- Page Content -->
+			<div class="container">
+				<!-- home -->
+				<div id="home" style="padding-top:100px;">
+					<h3>Description</h3>
+					<p>This project enables control of leds connected to a Rasberry Pi via a web interface, no GUI on he Pi is needed.</p>
+					<h3>The Hardware</h3>
+					<p>You will need</p>
+					<ul>
+						<li>A Rasberry Pi 2 - Link - (connected to the same net work as your browser)</li>
+						<li>A Breadboard - Link</li>
+						<li>a number of LEDs - Link</li>
+						<li>An equal number of 220 ohm Resitors - link</li>
+						<li>Wires - link</li>
+					</ul>
+					<p>You can connect upto 17 LEDS to the GPIO pins on the PI 2 (Circled Green)</p>
+					<img src="http://www.raspberrypi-spy.co.uk/wp-content/uploads/2012/06/Raspberry-Pi-GPIO-Layout-Model-B-Plus-rotated-2700x900.png"
+					style="height: 300px;" />
+					<h4>Fritzing Diagram:</h4>
+					<a href='http://postimg.org/image/3trgnq9u3/' target='_blank'><img src='http://s1.postimg.org/3trgnq9u3/Fritzing_Web_LEDController.jpg' border='0' alt="Fritzing Web LEDController" /></a>
+					<h4>Schematic Diagram:</h4>
+					<a href='http://postimage.org/' target='_blank'><img src='http://s15.postimg.org/rdi6e7ji3/Fritzing_Web_LEDController_Schematic.png' border='0' alt="Fritzing Web LEDController Schematic" /></a>
+					<br />
+					<a target='_blank' href='http://postimage.org/app.php'>screengrab</a>
+					<br />
+					<br />
+					<h3>Directions:</h3>
+					<ol>
+						<li>Setup the Raspberry Pi as in the above diagrams (any of the GPIO pins can be used)</li>
+						<li>Use the Api information below to:
+							<p>Add an LED via the GPIO number.</p>
+							<p>Then control its state.</p>
+							<p>And Remove the LED(s) when
+								<done></done>.</p>
+						</li>
+					</ol>
+				</div>
+				<!-- /home -->
+				<!-- api -->
+				<div id="api" style="padding-top:100px;"></div>
+				<!-- /#api -->
+			</div>
+			<!-- /.container -->
+			<div class="container">
+				<hr>
+				<!-- Footer -->
+				<footer>
+					<div class="row">
+						<div class="col-lg-12">
+							<p>Copyright &copy; Your Website 2014</p>
+						</div>
+					</div>
+				</footer>
+			</div>
+			<!-- /.container -->
+			<!-- Menu Toggle Script -->
+			<script>
+				$("#menu-toggle").click(function(e) {
+				        e.preventDefault();
+				        $("#wrapper").toggleClass("toggled");
+				    });
+			</script>
+			<script>
+				var url = "http://192.168.72.117:8000";
+				
+				$( document ).ready(function() {
+					$.getJSON(url + "/api/list").then(function(d){
+						$("#api").html("");
+						
+						for (var i = 0; i< d.routes.length;i++)
+						{
+							var panel = $("<div></div>").addClass("panel panel-default")
+							var path = "/api/" + d.routes[i].Path;
+							panel.append($("<div></div>").addClass("panel-heading").text(path));
+							
+							var link = url + path;
+							
+							panel.append($("<div></div>").addClass("panel-heading").html("<a href='" + link + "' target='_blank'>" + link + "</a>"));
+							panel.append($("<div></div>").addClass("panel-body").text(d.routes[i].Description));
+							$("#api").append(panel)
+						}
+					});
+					});
+			</script>
+		</body>
+	</body>
+
+</html>
